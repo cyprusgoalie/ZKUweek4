@@ -1,14 +1,28 @@
 // TODO: Import necessary libraries. Check cargo.toml and the documentation of the libraries.
+use ndarray::ArrayD;
+use rand::Rng;
+use ark_bls12_381::fq::Fq;
+use ark-std;
+use rstest;
+use lazy_static;
 struct Freivald {
-    x: // Array/Vec of Fq,
+    x:Vec<Fq>;// Array/Vec of Fq,
 }
 
 impl Freivald {
     // TODO: Create constructor for object
     fn new(array_size: usize) -> Self {
-        todo!()
+        let mut x: Vec<Fq> = Vec::new();
+        let mut rng = rand::thread_rng();
+        
         // Generate random number
+        let r: Fq = rng.gen();
+        
         // Populate vector with values r^i for i=0..matrix_size
+        for i in (0..array_size)
+        {
+            x.push(r^i);
+        }
         // Return freivald value with this vector as its x value
     }
 
@@ -23,7 +37,7 @@ impl Freivald {
     // utility function to not have to instantiate Freivalds if you just want to make one
     // verification.
     // TODO: Add types for arguments
-    fn verify_once(matrix_a, matrix_b, supposed_ab) -> bool {
+    fn verify_once(matrix_a:Vec<Vec<Fq>>, matrix_b:Vec<Vec<Fq>>, supposed_ab:Vec<Vec<Fq>>) -> bool {
         let freivald = Freivald::new(supposed_ab.nrows());
         freivald.verify(matrix_a, matrix_b, supposed_ab)
     }
@@ -41,7 +55,7 @@ fn main() {
 }
 
 // TODO: Add proper types to input matrices. Remember matrices should hold Fq values
-pub fn check_matrix_dimensions(matrix_a, matrix_b, supposed_ab) -> bool {
+pub fn check_matrix_dimensions(matrix_a:Vec<Vec<Fq>>, matrix_b:Vec<Vec<Fq>>, supposed_ab:Vec<Vec<Fq>>) -> bool {
     // TODO: Check if dimensions of making matrix_a * matrix_b matches values in supposed_ab.
     // If it doesn't you know its not the correct result independently of matrix contents
     todo!()
